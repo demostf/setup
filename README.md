@@ -7,7 +7,10 @@ Hosting setup for demos.tf
 Create a `.env` file with the following values:
 
 - HOST
+- PORT
+- HTTPS_PORT
 - EMAIL
+- DB_PASSWORD
 
 Start the containers:
 
