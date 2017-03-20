@@ -12,6 +12,8 @@ services:
       - "./api.tmpl:/etc/nginx/conf.d/api.tmpl"
     environment:
      - HOST=${HOST}
+     - UPLOAD_FASTCGI=api:9000
+     - UPLOAD_SCRIPT=/app/public/upload.php
     networks:
       - proxy-tier
     depends_on:
@@ -20,11 +22,15 @@ services:
     image: demostf/api
     container_name: api
     environment:
+      - BASE_HOST=${HOST}
+      - DEMO_ROOT=/demos
       - DB_TYPE=pgsql
       - DB_HOST=db
       - DB_DATABASE=postgres
       - DB_USERNAME=postgres
       - DB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - "${DEMO_ROOT}:/demos"
     networks:
       - proxy-tier
       - db-tier
