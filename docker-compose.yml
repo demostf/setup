@@ -29,14 +29,21 @@ services:
       - DB_DATABASE=postgres
       - DB_USERNAME=postgres
       - DB_PASSWORD=${DB_PASSWORD}
+      - PARSER_URL=http://parser/parse
     volumes:
       - "${DEMO_ROOT}:/demos"
     networks:
       - proxy-tier
       - db-tier
-  upload:
-    image: nginx
-    container_name: upload
+      - parser-tier
+
+  parser:
+      image: demostf/demoserver
+      container_name: parser
+      mem_limit: 256m
+      restart: unless-stopped
+      networks:
+        - parser-tier
 
   db:
     image: demostf/db
@@ -51,6 +58,7 @@ services:
 networks:
   proxy-tier:
   db-tier:
+  parser-tier:
 
 volumes:
   certs:
