@@ -24,12 +24,14 @@ services:
     environment:
       - BASE_HOST=${HOST}
       - DEMO_ROOT=/demos
+      - DEMO_HOST=static.$HOST
       - DB_TYPE=pgsql
       - DB_HOST=db
       - DB_DATABASE=postgres
       - DB_USERNAME=postgres
       - DB_PASSWORD=${DB_PASSWORD}
       - PARSER_URL=http://parser/parse
+      - APP_ROOT=https://api.$HOST
     volumes:
       - "${DEMO_ROOT}:/demos"
     networks:
