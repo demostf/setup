@@ -10,6 +10,8 @@ services:
     volumes:
       - "certs:/etc/nginx/certs:ro"
       - "./api.tmpl:/etc/nginx/conf.d/api.tmpl"
+      - "./static.tmpl:/etc/nginx/conf.d/static.tmpl"
+      - "${DEMO_ROOT}:/demos"
     environment:
      - HOST=${HOST}
      - UPLOAD_FASTCGI=api:9000
