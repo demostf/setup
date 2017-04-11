@@ -13,7 +13,7 @@ services:
     environment:
      - HOST=${HOST}
      - UPLOAD_FASTCGI=api:9000
-     - UPLOAD_SCRIPT=/app/public/upload.php
+     - UPLOAD_SCRIPT=/app/src/public/upload.php
     networks:
       - proxy-tier
     depends_on:
