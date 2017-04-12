@@ -6,7 +6,6 @@ services:
     container_name: nginx
     ports:
       - "${PORT}:80"
-      - "${HTTPS_PORT}:443"
     volumes:
       - "certs:/etc/nginx/certs:ro"
       - "./api.tmpl:/etc/nginx/conf.d/api.tmpl"
@@ -17,7 +16,7 @@ services:
      - UPLOAD_FASTCGI=api:9000
      - UPLOAD_SCRIPT=/app/src/public/upload.php
     networks:
-      - proxy-tier
+      - api-tier
     depends_on:
       - api
   api:
@@ -37,7 +36,7 @@ services:
     volumes:
       - "${DEMO_ROOT}:/demos"
     networks:
-      - proxy-tier
+      - api-tier
       - db-tier
       - parser-tier
 
@@ -60,7 +59,7 @@ services:
       - db-tier
 
 networks:
-  proxy-tier:
+  api-tier:
   db-tier:
   parser-tier:
 
