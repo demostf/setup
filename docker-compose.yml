@@ -10,13 +10,14 @@ services:
       - "certs:/etc/nginx/certs:ro"
       - "./api.tmpl:/etc/nginx/conf.d/api.tmpl"
       - "./static.tmpl:/etc/nginx/conf.d/static.tmpl"
+      - "./sync.tmpl:/etc/nginx/conf.d/sync.tmpl"
       - "${DEMO_ROOT}:/demos"
     environment:
      - HOST=${HOST}
      - UPLOAD_FASTCGI=api:9000
      - UPLOAD_SCRIPT=/app/src/public/upload.php
     networks:
-      - api-tier
+      - proxy-tier
     depends_on:
       - api
   api:
@@ -36,7 +37,7 @@ services:
     volumes:
       - "${DEMO_ROOT}:/demos"
     networks:
-      - api-tier
+      - proxy-tier
       - db-tier
       - parser-tier
 
@@ -47,6 +48,14 @@ services:
       restart: unless-stopped
       networks:
         - parser-tier
+  
+  sync:
+      image: demostf/sync
+      container_name: sync
+      mem_limit: 128m
+      restart: unless-stopped
+      networks:
+        - proxy-tier
 
   db:
     image: demostf/db
@@ -59,7 +68,7 @@ services:
       - db-tier
 
 networks:
-  api-tier:
+  proxy-tier:
   db-tier:
   parser-tier:
 
