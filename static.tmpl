@@ -1,5 +1,8 @@
 server {
 	listen 80;
 	server_name static.${HOST};
+
+	add_header 'Access-Control-Allow-Origin' '*';
+
 	root /demos;
 }
