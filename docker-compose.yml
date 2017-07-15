@@ -34,6 +34,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - PARSER_URL=http://parser/parse
       - APP_ROOT=https://api.$HOST
+      - EDIT_SECRET=${EDIT_SECRET}
     volumes:
       - "${DEMO_ROOT}:/demos"
     networks:
