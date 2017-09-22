@@ -104,7 +104,7 @@ services:
       trap "break;exit" SIGHUP SIGINT SIGTERM
       while /bin/true; do
         su -s "/bin/bash" -c "/usr/local/bin/php /var/www/html/console core:archive" www-data
-        sleep 3600
+        sleep 150
       done
       EOF'
 
