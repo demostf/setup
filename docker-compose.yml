@@ -98,7 +98,7 @@ services:
     links:
       - db
     volumes_from:
-      - app
+      - piwik
     entrypoint: |
       bash -c 'bash -s <<EOF
       trap "break;exit" SIGHUP SIGINT SIGTERM
