@@ -1,0 +1,22 @@
+server {
+	listen 80;
+	server_name piwik.${HOST};
+
+	add_header 'Access-Control-Allow-Origin' '*';
+
+    # root /usr/share/nginx/html;
+    root /var/www/html/;
+    index index.php index.html index.htm;
+
+    location ~ \.php$ {
+        fastcgi_pass   piwik:9000;
+        fastcgi_param  SCRIPT_FILENAME    ${DOLLAR}document_root${DOLLAR}fastcgi_script_name;
+        fastcgi_param  SCRIPT_NAME        ${DOLLAR}fastcgi_script_name;
+        include        fastcgi_params;
+    }
+
+    location = /favicon.ico {
+        log_not_found off;
+        access_log off;
+    }
+}
