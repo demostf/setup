@@ -51,7 +51,7 @@ services:
         - parser-tier
   
   sync:
-      image: demostf/sync
+      image: demostf/sync-rs
       container_name: sync
       mem_limit: 128m
       restart: unless-stopped
