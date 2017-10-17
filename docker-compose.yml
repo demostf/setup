@@ -11,20 +11,15 @@ services:
       - "./api.tmpl:/etc/nginx/conf.d/api.tmpl"
       - "./static.tmpl:/etc/nginx/conf.d/static.tmpl"
       - "./sync.tmpl:/etc/nginx/conf.d/sync.tmpl"
-      - "./piwik.tmpl:/etc/nginx/conf.d/piwik.tmpl"
       - "${DEMO_ROOT}:/demos"
-    volumes_from:
-      - piwik
     environment:
      - HOST=${HOST}
      - UPLOAD_FASTCGI=api:9000
      - UPLOAD_SCRIPT=/app/src/public/upload.php
     networks:
       - proxy-tier
-      - piwik-tier
     depends_on:
       - api
-      - piwik
   api:
     image: demostf/api
     container_name: api
@@ -73,47 +68,10 @@ services:
     networks:
       - db-tier
 
-  piwik-db:
-    image: mysql
-    container_name: piwik-db
-    volumes:
-      - ./piwik_db_data:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-    networks:
-      - piwik-db-tier
-
-  piwik:
-    image: piwik:fpm
-    container_name: piwik
-    links:
-      - db
-    volumes:
-      - ./piwik_config:/var/www/html/config
-    networks:
-      - piwik-db-tier
-      - piwik-tier
-  cron:
-    image: piwik:fpm
-    links:
-      - db
-    volumes_from:
-      - piwik
-    entrypoint: |
-      bash -c 'bash -s <<EOF
-      trap "break;exit" SIGHUP SIGINT SIGTERM
-      while /bin/true; do
-        su -s "/bin/bash" -c "/usr/local/bin/php /var/www/html/console core:archive" www-data
-        sleep 150
-      done
-      EOF'
-
 networks:
   proxy-tier:
   db-tier:
   parser-tier:
-  piwik-tier:
-  piwik-db-tier:
 
 volumes:
   certs:
