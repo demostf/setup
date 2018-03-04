@@ -2,6 +2,7 @@ version: '2'
 
 services:
   nginx:
+    restart: always
     image: demostf/demos.tf
     container_name: nginx
     ports:
@@ -21,6 +22,7 @@ services:
     depends_on:
       - api
   api:
+    restart: always
     image: demostf/api
     container_name: api
     environment:
@@ -43,22 +45,25 @@ services:
       - parser-tier
 
   parser:
-      image: demostf/demoserver
-      container_name: parser
-      mem_limit: 256m
-      restart: unless-stopped
-      networks:
-        - parser-tier
+    restart: always
+    image: demostf/demoserver
+    container_name: parser
+    mem_limit: 256m
+    restart: unless-stopped
+    networks:
+      - parser-tier
   
   sync:
-      image: demostf/sync-rs
-      container_name: sync
-      mem_limit: 128m
-      restart: unless-stopped
-      networks:
-        - proxy-tier
+    restart: always
+    image: demostf/sync-rs
+    container_name: sync
+    mem_limit: 128m
+    restart: unless-stopped
+    networks:
+      - proxy-tier
 
   db:
+    restart: always
     image: demostf/db
     container_name: db
     environment:
