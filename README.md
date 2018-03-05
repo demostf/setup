@@ -10,6 +10,7 @@ Create a `.env` file with the following values:
 - PORT: the port the webserver will listen to
 - DB_PASSWORD: the password that will be used for the database
 - DEMO_ROOT: the folder the demos will be stored in
+- EDIT_SECRET: private api key for migrating demos to new url
 
 Start the containers:
 
