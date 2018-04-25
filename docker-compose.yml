@@ -37,6 +37,7 @@ services:
       - PARSER_URL=http://parser/parse
       - APP_ROOT=https://api.$HOST
       - EDIT_SECRET=${EDIT_SECRET}
+      - UPLOAD_KEY=${UPLOAD_KEY}
     volumes:
       - "${DEMO_ROOT}:/demos"
     networks:
