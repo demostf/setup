@@ -34,7 +34,7 @@ services:
       - DB_DATABASE=postgres
       - DB_USERNAME=postgres
       - DB_PASSWORD=${DB_PASSWORD}
-      - PARSER_URL=http://parser/parse
+      - PARSER_URL=${PARSER_BASE_URL}/url
       - APP_ROOT=https://api.$HOST
       - EDIT_SECRET=${EDIT_SECRET}
       - UPLOAD_KEY=${UPLOAD_KEY}
