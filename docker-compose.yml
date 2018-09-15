@@ -78,6 +78,7 @@ services:
     environment:
     - HOST=$HOST
     - TARGET=nginx
+    - CERTBOT_EMAIL=$EMAIL
     networks:
     - proxy-tier
     ports:
