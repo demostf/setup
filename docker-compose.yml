@@ -21,6 +21,7 @@ services:
       - proxy-tier
     depends_on:
       - api
+
   api:
     restart: always
     image: demostf/api
@@ -50,7 +51,6 @@ services:
     image: demostf/demoserver
     container_name: parser
     mem_limit: 256m
-    restart: unless-stopped
     networks:
       - parser-tier
   
@@ -59,7 +59,6 @@ services:
     image: demostf/sync-rs
     container_name: sync
     mem_limit: 128m
-    restart: unless-stopped
     networks:
       - proxy-tier
 
@@ -73,6 +72,16 @@ services:
       - "./db_data:/var/lib/postgresql/data"
     networks:
       - db-tier
+
+  proxy:
+    restart: always
+    image: demostf/proxy
+    container_name: proxy
+    environment:
+    - HOST=$HOST
+    - TARGET=nginx
+    networks:
+    - proxy-tier
 
 networks:
   proxy-tier:
