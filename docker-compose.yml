@@ -72,6 +72,17 @@ services:
     networks:
       - db-tier
 
+  db-refresh:
+    restart: always
+    image: demostf/postgres_refresh
+    container_name: db-refresh
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_HOST=db
+      - VIEWS="map_list name_list"
+    networks:
+      - db-tier
+
   proxy:
     restart: always
     image: demostf/proxy
