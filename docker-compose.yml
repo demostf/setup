@@ -80,7 +80,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_HOST=db
-      - VIEWS=map_list name_list
+      - VIEWS=map_list name_list users_named
     networks:
       - db-tier
 
