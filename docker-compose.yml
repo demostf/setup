@@ -55,7 +55,7 @@ services:
   
   sync:
     restart: always
-    image: demostf/sync-rs
+    image: demostf/sync
     container_name: sync
     mem_limit: 128m
     networks:
