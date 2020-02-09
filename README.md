@@ -20,8 +20,11 @@ docker-compose up -d
 
 ## Domain names
 
-The setup uses three domains derived from the base domain.
+The setup uses four domains derived from the base domain.
 
 - ${HOST}: the main site
 - api.${HOST}: the backend api and upload code
 - static.${HOST}: server uploaded demos
+- sync.${HPST}: playback sync server
+
+All four domains should point towards the server on which this setup is running
