@@ -94,6 +94,8 @@ services:
     - CERTBOT_EMAIL=$EMAIL
     networks:
     - proxy-tier
+    volumes:
+    - ./letsencrypt:/etc/letsencrypt
     ports:
     - "80:80"
     - "443:443"
