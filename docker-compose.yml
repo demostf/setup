@@ -95,9 +95,21 @@ services:
     - proxy-tier
     volumes:
     - ./letsencrypt:/etc/letsencrypt
+    - logs:/logs
     ports:
     - "80:80"
     - "443:443"
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /etc/machine-id:/etc/machine-id
+      - logs:/logs:ro
+      - ./promtail.yml:/etc/promtail/promtail.yml
+      - ./promtail-positions:/positions
+    environment:
+      - LOKI=${LOKI_URL}
+    command: -config.file=/etc/promtail/promtail.yml -config.expand-env=true
 
 networks:
   proxy-tier:
@@ -106,3 +118,4 @@ networks:
 
 volumes:
   certs:
+  logs:
