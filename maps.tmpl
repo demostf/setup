@@ -1,0 +1,13 @@
+server {
+	listen 80;
+	server_name maps.${HOST};
+
+	add_header 'Access-Control-Allow-Origin' '*';
+
+	location / {
+		proxy_pass http://maps;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade ${DOLLAR}http_upgrade;
+		proxy_set_header Connection "upgrade";
+	}
+}

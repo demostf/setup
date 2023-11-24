@@ -25,6 +25,7 @@ The setup uses four domains derived from the base domain.
 - ${HOST}: the main site
 - api.${HOST}: the backend api and upload code
 - static.${HOST}: server uploaded demos
-- sync.${HPST}: playback sync server
+- sync.${HOST}: playback sync server
+- maps.${HOST}: static map data
 
 All four domains should point towards the server on which this setup is running
