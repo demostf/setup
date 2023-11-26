@@ -12,7 +12,6 @@ services:
       - "DATABASE_HOSTNAME=db"
       - "DATABASE_USERNAME=postgres"
       - "DATABASE_PASSWORD=${DB_PASSWORD}"
-      - "RUST_LOG=debug,hyper=info"
     networks:
       - proxy-tier
       - db-tier
