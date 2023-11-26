@@ -3,23 +3,21 @@ version: '2'
 services:
   frontend:
     restart: always
-    image: demostf/demos.tf
-    container_name: nginx
-    volumes:
-      - "certs:/etc/nginx/certs:ro"
-      - "./api.tmpl:/etc/nginx/conf.d/api.tmpl"
-      - "./static.tmpl:/etc/nginx/conf.d/static.tmpl"
-      - "./sync.tmpl:/etc/nginx/conf.d/sync.tmpl"
-      - "./maps.tmpl:/etc/nginx/conf.d/maps.tmpl"
-      - "${DEMO_ROOT}:/demos"
+    image: demostf/frontend
+    container_name: frontend
     environment:
-     - HOST=${HOST}
-     - UPLOAD_FASTCGI=api:9000
-     - UPLOAD_SCRIPT=/app/src/public/upload.php
+      - "SITE_URL=https://${HOST}/"
+      - "SITE_API=https://api.${HOST}/"
+      - "SITE_MAPS=https://maps.${HOST}/"
+      - "DATABASE_HOSTNAME=db"
+      - "DATABASE_USERNAME=postgres"
+      - "DATABASE_PASSWORD=${DB_PASSWORD}"
+      - "RUST_LOG=debug,hyper=info"
     networks:
       - proxy-tier
+      - db-tier
     depends_on:
-      - api
+      - db
 
   api:
     restart: always
@@ -43,15 +41,6 @@ services:
     networks:
       - proxy-tier
       - db-tier
-      - parser-tier
-
-  parser:
-    restart: always
-    image: demostf/demoserver
-    container_name: parser
-    mem_limit: 256m
-    networks:
-      - parser-tier
   
   sync:
     restart: always
@@ -96,17 +85,17 @@ services:
     image: demostf/proxy
     container_name: proxy
     environment:
-    - HOST=$HOST
-    - TARGET=nginx
-    - CERTBOT_EMAIL=$EMAIL
+      - HOST=$HOST
+      - CERTBOT_EMAIL=$EMAIL
     networks:
-    - proxy-tier
+      - proxy-tier
     volumes:
-    - ./letsencrypt:/etc/letsencrypt
-    - logs:/logs
+      - "${DEMO_ROOT}:/demos"
+      - ./letsencrypt:/etc/letsencrypt
+      - logs:/logs
     ports:
-    - "80:80"
-    - "443:443"
+      - "80:80"
+      - "443:443"
 
   promtail:
     image: grafana/promtail:latest
@@ -125,5 +114,4 @@ networks:
   parser-tier:
 
 volumes:
-  certs:
   logs:
