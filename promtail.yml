@@ -19,4 +19,4 @@ scrape_configs:
         labels:
           job: varlogs
           host: demos.tf
-          __path__: /logs/*log
+          __path__: /logs/access.log

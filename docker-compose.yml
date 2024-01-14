@@ -109,10 +109,18 @@ services:
       - LOKI_PASSWORD=${LOKI_PASSWORD}
     command: -config.file=/etc/promtail/promtail.yml -config.expand-env=true
 
+  metrics:
+    image: ghcr.io/martin-helmich/prometheus-nginxlog-exporter/exporter:v1
+    networks:
+      - proxy-tier
+    volumes:
+      - logs:/logs:ro
+      - ./nginxlog.yaml:/nginxlog.yaml
+    command: -config-file=/nginxlog.yaml
+
 networks:
   proxy-tier:
   db-tier:
-  parser-tier:
 
 volumes:
   logs:
