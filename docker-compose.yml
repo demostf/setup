@@ -104,7 +104,9 @@ services:
       - ./promtail.yml:/etc/promtail/promtail.yml
       - ./promtail-positions:/positions
     environment:
-      - LOKI=${LOKI_URL}
+      - LOKI_URL=${LOKI_URL}
+      - LOKI_USERNAME=${LOKI_USERNAME}
+      - LOKI_PASSWORD=${LOKI_PASSWORD}
     command: -config.file=/etc/promtail/promtail.yml -config.expand-env=true
 
 networks:
