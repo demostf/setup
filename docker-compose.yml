@@ -12,11 +12,16 @@ services:
       - "DATABASE_HOSTNAME=db"
       - "DATABASE_USERNAME=postgres"
       - "DATABASE_PASSWORD=${DB_PASSWORD}"
+      - "TRACING_ENDPOINT=${TRACING_ENDPOINT}"
+      - "TRACING_TLS_CERT_FILE=${TRACING_TLS_CERT_FILE}"
+      - "TRACING_TLS_KEY_FILE=${TRACING_TLS_KEY_FILE}"
     networks:
       - proxy-tier
       - db-tier
     depends_on:
       - db
+    volumes:
+      - "./keys:/keys:ro"
 
   api:
     restart: always
