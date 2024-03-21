@@ -90,16 +90,13 @@ services:
     container_name: proxy
     environment:
       - HOST=$HOST
-      - CERTBOT_EMAIL=$EMAIL
     networks:
       - proxy-tier
     volumes:
       - "${DEMO_ROOT}:/demos"
-      - ./letsencrypt:/etc/letsencrypt
       - logs:/logs
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:80"
 
   promtail:
     image: grafana/promtail:latest
